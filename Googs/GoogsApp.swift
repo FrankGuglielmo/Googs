@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct GoogsApp: App {
+    @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -25,7 +27,11 @@ struct GoogsApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if hasCompletedOnboarding {
+                ContentView()
+            } else {
+                OnboardView()
+            }
         }
         .modelContainer(sharedModelContainer)
     }

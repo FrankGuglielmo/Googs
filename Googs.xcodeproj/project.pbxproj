@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7B9B8B382DA8EBCF00ECBD05 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9B8B372DA8EBCF00ECBD05 /* RiveRuntime */; };
+		7B9B8B462DA8F4CA00ECBD05 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7B9B8B452DA8F4CA00ECBD05 /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		7B9B8AF42DA8EABF00ECBD05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,11 +32,42 @@
 		7B9B8AE12DA8EABD00ECBD05 /* Googs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Googs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B9B8AF32DA8EABF00ECBD05 /* GoogsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B9B8AFD2DA8EABF00ECBD05 /* GoogsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B9B8B452DA8F4CA00ECBD05 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7B9B8B332DA8EB4F00ECBD05 /* Exceptions for "Googs" folder in "Googs" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7B9B8AE02DA8EABD00ECBD05 /* Googs */;
+		};
+		7B9B8B342DA8EB4F00ECBD05 /* Exceptions for "Googs" folder in "GoogsUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				RiveAssets/onboard.riv,
+			);
+			target = 7B9B8AFC2DA8EABF00ECBD05 /* GoogsUITests */;
+		};
+		7B9B8B3D2DA8EE8B00ECBD05 /* Exceptions for "Googs" folder in "GoogsTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RiveAssets/onboard.riv,
+			);
+			target = 7B9B8AF22DA8EABF00ECBD05 /* GoogsTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7B9B8AE32DA8EABD00ECBD05 /* Googs */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7B9B8B332DA8EB4F00ECBD05 /* Exceptions for "Googs" folder in "Googs" target */,
+				7B9B8B3D2DA8EE8B00ECBD05 /* Exceptions for "Googs" folder in "GoogsTests" target */,
+				7B9B8B342DA8EB4F00ECBD05 /* Exceptions for "Googs" folder in "GoogsUITests" target */,
+			);
 			path = Googs;
 			sourceTree = "<group>";
 		};
@@ -52,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B9B8B382DA8EBCF00ECBD05 /* RiveRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +112,7 @@
 		7B9B8AD82DA8EABD00ECBD05 = {
 			isa = PBXGroup;
 			children = (
+				7B9B8B452DA8F4CA00ECBD05 /* .gitignore */,
 				7B9B8AE32DA8EABD00ECBD05 /* Googs */,
 				7B9B8AF62DA8EABF00ECBD05 /* GoogsTests */,
 				7B9B8B002DA8EABF00ECBD05 /* GoogsUITests */,
@@ -112,6 +150,7 @@
 			);
 			name = Googs;
 			packageProductDependencies = (
+				7B9B8B372DA8EBCF00ECBD05 /* RiveRuntime */,
 			);
 			productName = Googs;
 			productReference = 7B9B8AE12DA8EABD00ECBD05 /* Googs.app */;
@@ -195,6 +234,9 @@
 			);
 			mainGroup = 7B9B8AD82DA8EABD00ECBD05;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7B9B8B362DA8EB9E00ECBD05 /* XCRemoteSwiftPackageReference "rive-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7B9B8AE22DA8EABD00ECBD05 /* Products */;
 			projectDirPath = "";
@@ -212,6 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B9B8B462DA8F4CA00ECBD05 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,6 +601,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7B9B8B362DA8EB9E00ECBD05 /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rive-app/rive-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7B9B8B372DA8EBCF00ECBD05 /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B9B8B362DA8EB9E00ECBD05 /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7B9B8AD92DA8EABD00ECBD05 /* Project object */;
 }
