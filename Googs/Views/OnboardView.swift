@@ -41,54 +41,74 @@ struct OnboardView: View {
             VStack {
                 // MARK: - Page Content
                 TabView(selection: $pageIndex) {
-                    // Page 0: Welcome
-                    VStack(spacing: 20) {
-                        Image(systemName: "hand.wave.fill")
+                    
+                    // Page 0: Meet Your New Smart Inbox
+                    VStack(spacing: 24) {
+                        Text("Meet Your New Smart Inbox")
+                            .font(.custom("Poppins Bold", size: 45))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 20)
+                        
+                        Image("onboardRobot")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 100, height: 100)
-                            .foregroundColor(.white)
-                        Text("Welcome to Googs!")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        Text("Discover adventures tailored for you.")
-                            .foregroundColor(.white)
-                            .padding(.horizontal)
+                            .frame(maxWidth: 300, maxHeight: 300)
+                        
+                        Text("""
+                        Say hello to your AI-powered email assistant! Connect your email account, and let our intelligent system learn what matters most to you. It’s time to keep the important conversations close and the clutter far, far away.
+                        """)
+                        .font(.custom("Poppins Regular", size: 18))
+                        .foregroundStyle(.white.opacity(0.9))
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 350)
+                        .padding(.horizontal, 20)
                     }
                     .tag(0)
                     
-                    // Page 1: Features
-                    VStack(spacing: 20) {
-                        Image(systemName: "sparkles")
+                    
+                    // Page 1: Customize Your Notifications
+                    VStack(spacing: 24) {
+                        Text("Hear Only What You Need to Hear")
+                            .font(.custom("Poppins Bold", size: 45))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 20)
+                        
+                        Image("onboardNotification")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 100, height: 100)
-                            .foregroundColor(.white)
-                        Text("Explore Features")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        Text("Find amazing tools to enhance your experience.")
-                            .foregroundColor(.white)
-                            .padding(.horizontal)
+                            .frame(maxWidth: 300, maxHeight: 300)
+                        
+                        Text("""
+                    Too many alerts can disrupt your day. That’s why our AI helps you decide which messages are worth your attention. Simply tell us what’s high priority, and your assistant will notify you in real time. Turn off your old notifications and let us handle the rest.
+                    """)
+                        .font(.custom("Poppins Regular", size: 18))
+                        .foregroundColor(.white.opacity(0.9))
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 350)
+                        .padding(.horizontal, 20)
                     }
                     .tag(1)
                     
-                    // Page 2: Get Started
-                    VStack(spacing: 20) {
-                        Image(systemName: "arrow.right.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 100)
-                            .foregroundColor(.white)
-                        Text("Get Started")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        Text("Tap below to launch the app!")
-                            .foregroundColor(.white)
-                            .padding(.horizontal)
+                    
+                    // Page 2: Get Started Effortlessly
+                    VStack(spacing: 32) {
+                        // No image for screen 3 (or add one if you like)
+                        
+                        Text("Get Started Now!")
+                            .font(.custom("Poppins Bold", size: 48))
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 20)
+                        
+                        
+                        Text("""
+                Enable our notifications, let the AI do its magic, and you’re all set. Moving forward, you’ll only hear about the emails that truly matter. Take back your focus—no more noisy inbox, just smarter conversations.
+                """)
+                        .customFont(.body)
+                        .frame(maxWidth: 350)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
                     }
                     .tag(2)
                 }
