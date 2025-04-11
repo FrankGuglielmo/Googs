@@ -21,12 +21,13 @@ struct AnimatedGradientBackground: View {
         // Animate the gradient shift over 5 seconds, repeating forever
         .animation(
             .linear(duration: 3)
-             .repeatForever(autoreverses: true),
+            .repeatForever(autoreverses: true),
             value: animateGradient
         )
         .onAppear {
-            // Kick off the animation when this View appears
-            animateGradient = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                animateGradient = true
+            }
         }
     }
 }
