@@ -8,7 +8,7 @@ struct OnboardView: View {
     @State private var isAnimating: Bool = false
     // This flag controls navigation to the EmailSignUpView
     @State private var showSignUp = false
-
+    
     let onboardModel = RiveViewModel(
         fileName: "onboard",
         stateMachineName: "OnboardingMachine"
@@ -65,37 +65,17 @@ struct OnboardView: View {
                             Text("""
 Say hello to your AI-powered email assistant! Connect your email account, and let our intelligent system learn what matters most to you. It’s time to keep the important conversations close and the clutter far, far away.
 """)
-                                .font(.custom("Poppins Regular", size: 18))
-                                .foregroundStyle(.white.opacity(0.9))
-                                .multilineTextAlignment(.center)
-                                .frame(maxWidth: 350)
-                                .padding(.horizontal, 20)
+                            .font(.custom("Poppins Regular", size: 18))
+                            .foregroundStyle(.white.opacity(0.9))
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: 350)
+                            .padding(.horizontal, 20)
                         }
                         .tag(0)
                         
                         // Page 1: Customize Your Notifications
-                        VStack(spacing: 24) {
-                            Text("Hear Only What You Need to Hear")
-                                .font(.custom("Poppins Bold", size: 45))
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal, 20)
-                            
-                            Image("onboardNotification")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: 300, maxHeight: 300)
-                            
-                            Text("""
-Too many alerts can disrupt your day. That’s why our AI helps you decide which messages are worth your attention. Simply tell us what’s high priority, and your assistant will notify you in real time. Turn off your old notifications and let us handle the rest.
-""")
-                                .font(.custom("Poppins Regular", size: 18))
-                                .foregroundStyle(.white.opacity(0.9))
-                                .multilineTextAlignment(.center)
-                                .frame(maxWidth: 350)
-                                .padding(.horizontal, 20)
-                        }
-                        .tag(1)
+                        NotificationBar()
+                            .tag(1)
                         
                         // Page 2: Get Started Effortlessly
                         VStack(spacing: 32) {
@@ -107,10 +87,10 @@ Too many alerts can disrupt your day. That’s why our AI helps you decide which
                             Text("""
 Enable our notifications, let the AI do its magic, and you’re all set. Moving forward, you’ll only hear about the emails that truly matter. Take back your focus—no more noisy inbox, just smarter conversations.
 """)
-                                .customFont(.body)
-                                .frame(maxWidth: 350)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal, 20)
+                            .customFont(.body)
+                            .frame(maxWidth: 350)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 20)
                         }
                         .tag(2)
                     }

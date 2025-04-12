@@ -39,6 +39,9 @@ extension Color {
     static let bface2 = Color(hex: "BFACE2")
     static let ff9e5e = Color(hex: "FF9E5E")
     static let gray747474 = Color(hex: "747474")
+    static let f1f0f5 = Color(hex: "F1F0F5")
+    
+    
     
     
 }
