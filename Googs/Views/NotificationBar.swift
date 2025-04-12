@@ -91,7 +91,7 @@ struct NotificationBar: View {
             .padding(.horizontal)
             
             // Description Text
-            Text("Feel free to turn off your current email notifications and enable notifications with Googs!")
+            Text("Turn off your current email notifications and enable notifications with Googs!")
                 .font(.custom("Poppins Regular", size: 18))
                 .foregroundStyle(.white.opacity(0.9))
                 .multilineTextAlignment(.center)
