@@ -17,7 +17,6 @@ struct GoogsApp: App {
             Item.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
@@ -27,11 +26,8 @@ struct GoogsApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if hasCompletedOnboarding {
-                ContentView()
-            } else {
-                OnboardView()
-            }
+            // Present the RootView, which first shows the splash and then the main content.
+            RootView()
         }
         .modelContainer(sharedModelContainer)
     }

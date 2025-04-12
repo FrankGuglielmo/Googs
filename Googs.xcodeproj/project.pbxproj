@@ -47,6 +47,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				RiveAssets/googslaunchscreen.riv,
 				RiveAssets/notificationBell.riv,
 				RiveAssets/onboard.riv,
 			);
@@ -55,6 +56,7 @@
 		7B9B8B3D2DA8EE8B00ECBD05 /* Exceptions for "Googs" folder in "GoogsTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				RiveAssets/googslaunchscreen.riv,
 				RiveAssets/notificationBell.riv,
 				RiveAssets/onboard.riv,
 			);
