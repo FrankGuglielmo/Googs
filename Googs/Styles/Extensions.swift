@@ -1,8 +1,8 @@
 //
-//  Color.swift
-//  Googs
+//  Extensions.swift
+//  AnimatedApp
 //
-//  Created by Frank Guglielmo on 4/10/25.
+//  Created by Meng To on 2022-04-11.
 //
 
 import SwiftUI
@@ -40,8 +40,19 @@ extension Color {
     static let ff9e5e = Color(hex: "FF9E5E")
     static let gray747474 = Color(hex: "747474")
     static let f1f0f5 = Color(hex: "F1F0F5")
-    
+    static let _17203a = Color(hex: "17203A")
     
     
     
 }
+
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
+

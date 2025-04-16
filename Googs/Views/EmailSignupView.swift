@@ -27,7 +27,7 @@ struct EmailSignUpView: View {
             }) {
                 Text("Submit")
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.blue)

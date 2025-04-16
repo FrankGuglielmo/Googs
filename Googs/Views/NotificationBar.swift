@@ -31,10 +31,9 @@ struct NotificationBar: View {
         VStack(spacing: 40) {
             // Title
             Text("Get Only What You Need")
-                .font(.custom("Poppins Bold", size: 45))
-                .foregroundColor(.white)
+                .customFont(.largeTitle, modifiers: [.disregardsLightMode])
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 10)
             
             VStack(spacing: 24) {
                 // Generic Email App Section
@@ -42,14 +41,13 @@ struct NotificationBar: View {
                     Image(systemName: "envelope")
                         .resizable()
                         .frame(width: 36, height: 28)
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .padding(12)
                         .background(Color.white)
                         .cornerRadius(12)
                     
                     Text("Your Current Email App")
-                        .font(.custom("Poppins Regular", size: 18))
-                        .foregroundStyle(.black.opacity(0.9))
+                        .customFont(.callout, modifiers: [.disregardsDarkMode])
                     
                     Spacer()
                     
@@ -72,8 +70,7 @@ struct NotificationBar: View {
                         .foregroundStyle(.black)
                     
                     Text("Googs")
-                        .font(.custom("Poppins Regular", size: 18))
-                        .foregroundStyle(.black.opacity(0.9))
+                        .customFont(.callout, modifiers: [.disregardsDarkMode])
                     
                     Spacer()
                     
@@ -92,8 +89,7 @@ struct NotificationBar: View {
             
             // Description Text
             Text("Turn off your current email notifications and enable notifications with Googs!")
-                .font(.custom("Poppins Regular", size: 18))
-                .foregroundStyle(.white.opacity(0.9))
+                .customFont(.body, modifiers: [.disregardsLightMode])
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 350)
                 .padding(.horizontal, 20)

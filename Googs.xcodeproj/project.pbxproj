@@ -46,19 +46,49 @@
 		7B9B8B342DA8EB4F00ECBD05 /* Exceptions for "Googs" folder in "GoogsUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Components/HCard.swift,
+				Components/VCard.swift,
+				"Fonts/Inter-Regular.ttf",
+				"Fonts/Inter-SemiBold.ttf",
+				"Fonts/Poppins-Bold.ttf",
 				Info.plist,
+				Model/Course.swift,
+				Model/CourseSection.swift,
+				Navigation/ContentView.swift,
+				Navigation/SideMenu.swift,
+				Navigation/TabBar.swift,
 				RiveAssets/googslaunchscreen.riv,
 				RiveAssets/notificationBell.riv,
 				RiveAssets/onboard.riv,
+				Styles.swift,
+				Styles/CustomButton.swift,
+				Styles/CustomTextField.swift,
+				Styles/Extensions.swift,
+				Views/HomeView.swift,
 			);
 			target = 7B9B8AFC2DA8EABF00ECBD05 /* GoogsUITests */;
 		};
 		7B9B8B3D2DA8EE8B00ECBD05 /* Exceptions for "Googs" folder in "GoogsTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Components/HCard.swift,
+				Components/VCard.swift,
+				"Fonts/Inter-Regular.ttf",
+				"Fonts/Inter-SemiBold.ttf",
+				"Fonts/Poppins-Bold.ttf",
+				Model/Course.swift,
+				Model/CourseSection.swift,
+				Navigation/ContentView.swift,
+				Navigation/SideMenu.swift,
+				Navigation/TabBar.swift,
 				RiveAssets/googslaunchscreen.riv,
 				RiveAssets/notificationBell.riv,
 				RiveAssets/onboard.riv,
+				Styles.swift,
+				Styles/CustomButton.swift,
+				Styles/CustomTextField.swift,
+				Styles/Extensions.swift,
+				Views/HomeView.swift,
 			);
 			target = 7B9B8AF22DA8EABF00ECBD05 /* GoogsTests */;
 		};
@@ -447,6 +477,7 @@
 				DEVELOPMENT_TEAM = 574355JH3A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Googs/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -459,9 +490,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = co.frankguglielmo.Googs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -477,6 +512,7 @@
 				DEVELOPMENT_TEAM = 574355JH3A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Googs/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -489,9 +525,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = co.frankguglielmo.Googs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
