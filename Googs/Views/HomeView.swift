@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-    @ObservedObject var viewStateManager: ViewStateManager
-    @State private var isShowingProfieMenu = false // Add a state for any bindings that might be needed
+    var onNavigateToEmails: () -> Void
+    var onNavigateToEmailDetail: (Email) -> Void
+    @State private var isShowingProfieMenu = false
     
     var body: some View {
         ZStack {
@@ -57,7 +58,7 @@ struct HomeView: View {
                 
                 
             Button(action: {
-                viewStateManager.navigateTo(.emails)
+                onNavigateToEmails()
             }) {
                 Text("View All")
                     .font(.subheadline)
@@ -67,14 +68,17 @@ struct HomeView: View {
             }
             .padding(.vertical, 10)
             
-            // Explicitly provide the view state manager to prevent parameter mismatch errors
-            DashboardEmailList(viewStateManager: viewStateManager)
+            // Use callback for email detail navigation
+            DashboardEmailList(onNavigateToEmailDetail: onNavigateToEmailDetail)
         }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(viewStateManager: ViewStateManager())
+        HomeView(
+            onNavigateToEmails: {},
+            onNavigateToEmailDetail: { _ in }
+        )
     }
 }

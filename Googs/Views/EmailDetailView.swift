@@ -9,11 +9,11 @@ import SwiftUI
 
 struct EmailDetailView: View {
     var email: Email
-    @ObservedObject var viewStateManager: ViewStateManager
+    var onBack: () -> Void
     
-    init(email: Email, viewStateManager: ViewStateManager) {
+    init(email: Email, onBack: @escaping () -> Void) {
         self.email = email
-        self.viewStateManager = viewStateManager
+        self.onBack = onBack
     }
     
     var body: some View {
@@ -25,7 +25,7 @@ struct EmailDetailView: View {
                         // Back button - positioned away from the universal menu button
                         Button(action: {
                             // Go back to previous view
-                            viewStateManager.navigateBack()
+                            onBack()
                         }) {
                             Image(systemName: "arrow.left")
                                 .font(.system(size: 20, weight: .semibold))
@@ -171,6 +171,9 @@ struct EmailDetailView: View {
 
 struct EmailDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        EmailDetailView(email: mockEmails[0], viewStateManager: ViewStateManager())
+        EmailDetailView(
+            email: mockEmails[0],
+            onBack: {}
+        )
     }
 }

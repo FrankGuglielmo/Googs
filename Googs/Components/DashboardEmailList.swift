@@ -9,12 +9,7 @@ import SwiftUI
 
 struct DashboardEmailList: View {
     @State private var importantEmails = getImportantEmails(count: 3)
-    @ObservedObject var viewStateManager: ViewStateManager
-    
-    // Function to navigate to email list
-    func navigateToEmailList() {
-        viewStateManager.navigateTo(.emails)
-    }
+    var onNavigateToEmailDetail: (Email) -> Void
     
     var body: some View {
         VStack(spacing: 16) {
@@ -23,8 +18,8 @@ struct DashboardEmailList: View {
                 ForEach(importantEmails) { email in
                     VStack(spacing: 0) {
                         EmailListItem(email: email) {
-                            // Navigate to email detail
-                            viewStateManager.showEmailDetailView(.emailDetail(email))
+                            // Navigate to email detail using callback
+                            onNavigateToEmailDetail(email)
                         }
                         
                         if email.id != importantEmails.last?.id {
@@ -44,7 +39,7 @@ struct DashboardEmailList_Previews: PreviewProvider {
         ZStack {
             Color("Background").ignoresSafeArea()
             
-            DashboardEmailList(viewStateManager: ViewStateManager())
+            DashboardEmailList(onNavigateToEmailDetail: { _ in })
                 .padding()
         }
     }

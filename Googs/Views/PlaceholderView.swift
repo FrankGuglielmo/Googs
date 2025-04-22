@@ -10,11 +10,9 @@ import SwiftUI
 /// A placeholder view for screens that haven't been implemented yet
 struct PlaceholderView: View {
     var title: String
-    @ObservedObject var viewStateManager: ViewStateManager
     
-    init(title: String, viewStateManager: ViewStateManager) {
+    init(title: String) {
         self.title = title
-        self.viewStateManager = viewStateManager
     }
     
     var body: some View {
@@ -58,6 +56,6 @@ struct PlaceholderView: View {
 
 struct PlaceholderView_Previews: PreviewProvider {
     static var previews: some View {
-        PlaceholderView(title: "Example", viewStateManager: ViewStateManager())
+        PlaceholderView(title: "Example")
     }
 }

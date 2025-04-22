@@ -9,7 +9,8 @@ import SwiftUI
 
 struct EmailListView: View {
     @State private var emails = mockEmails
-    @ObservedObject var viewStateManager: ViewStateManager
+    var onNavigateToSearch: () -> Void
+    var onNavigateToEmailDetail: (Email) -> Void
     
     var body: some View {
         ZStack {
@@ -33,7 +34,7 @@ struct EmailListView: View {
                 // Search button
                 Button(action: {
                     // Action for search
-                    viewStateManager.navigateTo(.search)
+                    onNavigateToSearch()
                 }) {
                     Image(systemName: "magnifyingglass")
                         .font(.system(size: 20))
@@ -62,7 +63,7 @@ struct EmailListView: View {
                         VStack(spacing: 0) {
                             EmailListItem(email: email) {
                                 // Navigate to email detail view
-                                viewStateManager.showEmailDetailView(.emailDetail(email))
+                                onNavigateToEmailDetail(email)
                             }
                             
                             Divider()
@@ -96,6 +97,9 @@ struct FilterTab: View {
 
 struct EmailListView_Previews: PreviewProvider {
     static var previews: some View {
-        EmailListView(viewStateManager: ViewStateManager())
+        EmailListView(
+            onNavigateToSearch: {},
+            onNavigateToEmailDetail: { _ in }
+        )
     }
 }

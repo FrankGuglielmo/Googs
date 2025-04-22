@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HCard: View {
     var section = courseSections[0]
-    @ObservedObject var viewStateManager: ViewStateManager = ViewStateManager()
     
     var body: some View {
         HStack(spacing: 20) {

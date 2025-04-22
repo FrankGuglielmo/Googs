@@ -11,7 +11,9 @@ import RiveRuntime
 struct SideMenu: View {
     @State var isDarkMode = false
     @State var selectedMenu: SelectedMenu = .home
-    @ObservedObject var viewStateManager: ViewStateManager
+    @Binding var currentMainView: ViewType
+    @Binding var isMenuOpen: Bool
+    @Binding var showProfileMenu: Bool
     @AppStorage("isSignedIn") var isSignedIn: Bool = true
     
     var body: some View {
@@ -168,32 +170,48 @@ struct SideMenu: View {
     
     // Handle navigation based on selected menu
     private func handleNavigation(for menuItem: SelectedMenu) {
-        // Navigate based on menu selection using ViewStateManager
+        // Navigate based on menu selection
         switch menuItem {
         case .home:
-            viewStateManager.navigateTo(.home)
+            switchMainView(to: .home)
         case .emails:
-            viewStateManager.navigateTo(.emails)
+            switchMainView(to: .emails)
         case .search:
-            viewStateManager.navigateTo(.search)
+            switchMainView(to: .search)
         case .favorites:
-            viewStateManager.navigateTo(.favorites)
+            switchMainView(to: .favorites)
         case .help:
-            viewStateManager.navigateTo(.help)
+            switchMainView(to: .help)
         case .history:
-            viewStateManager.navigateTo(.history)
+            switchMainView(to: .history)
         case .notifications:
-            viewStateManager.navigateTo(.notifications)
+            switchMainView(to: .notifications)
         case .darkmode:
             // Dark mode toggle doesn't need navigation
             break
+        }
+    }
+    
+    // Switch to a different main view
+    private func switchMainView(to viewType: ViewType) {
+        // Set the new view immediately
+        currentMainView = viewType
+        
+        // Close menus with animation
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
+            isMenuOpen = false
+            showProfileMenu = false
         }
     }
 }
 
 struct SideMenu_Previews: PreviewProvider {
     static var previews: some View {
-        SideMenu(viewStateManager: ViewStateManager())
+        SideMenu(
+            currentMainView: .constant(.home),
+            isMenuOpen: .constant(true),
+            showProfileMenu: .constant(false)
+        )
     }
 }
 
