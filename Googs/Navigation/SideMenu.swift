@@ -16,6 +16,35 @@ struct SideMenu: View {
     @Binding var showProfileMenu: Bool
     @AppStorage("isSignedIn") var isSignedIn: Bool = true
     
+    // Update selected menu when view changes from outside the menu
+    private func updateSelectedMenuFromView() {
+        selectedMenu = viewTypeToSelectedMenu(currentMainView)
+    }
+    
+    // Convert ViewType to SelectedMenu
+    private func viewTypeToSelectedMenu(_ viewType: ViewType) -> SelectedMenu {
+        switch viewType {
+        case .home:
+            return .home
+        case .emails:
+            return .emails
+        case .search:
+            return .search
+        case .favorites:
+            return .favorites
+        case .help:
+            return .help
+        case .history:
+            return .history
+        case .notifications:
+            return .notifications
+        case .settings:
+            return .darkmode // Map settings to darkmode for menu highlighting
+        case .emailDetail:
+            return .emails // Map email detail to emails section for menu highlighting
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack {
@@ -80,6 +109,14 @@ struct SideMenu: View {
         .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
         .shadow(color: Color(hex: "17203A").opacity(0.3), radius: 40, x: 0, y: 20)
         .frame(maxWidth: .infinity, alignment: .leading)
+        .onAppear {
+            // Set initial selected menu based on current view
+            updateSelectedMenuFromView()
+        }
+        .onChange(of: currentMainView) { _, newView in
+            // Update selected menu when view changes
+            updateSelectedMenuFromView()
+        }
     }
     
     var browse: some View {
