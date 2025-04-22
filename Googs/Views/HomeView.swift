@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    @ObservedObject var viewStateManager: ViewStateManager
+    @State private var isShowingProfieMenu = false // Add a state for any bindings that might be needed
+    
     var body: some View {
         ZStack {
             Color("Background").ignoresSafeArea()
@@ -45,24 +48,33 @@ struct HomeView: View {
                 }
             }
             
-            VStack {
+            
+            HStack {
                 Text("Emails")
                     .customFont(.title3)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 20)
                 
-                VStack(spacing: 20) {
-                    ForEach(courseSections) { section in
-                        HCard(section: section)
-                    }
-                }
+                
+            Button(action: {
+                viewStateManager.navigateTo(.emails)
+            }) {
+                Text("View All")
+                    .font(.subheadline)
+                    .foregroundColor(.blue)
+                    .padding(.trailing, 20)
             }
-            .padding(20)
+            }
+            .padding(.vertical, 10)
+            
+            // Explicitly provide the view state manager to prevent parameter mismatch errors
+            DashboardEmailList(viewStateManager: viewStateManager)
         }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(viewStateManager: ViewStateManager())
     }
 }

@@ -38,13 +38,10 @@ struct NotificationBar: View {
             VStack(spacing: 24) {
                 // Generic Email App Section
                 HStack(spacing: 20) {
-                    Image(systemName: "envelope")
+                    Image("GenericEmailApp")
                         .resizable()
-                        .frame(width: 36, height: 28)
-                        .foregroundStyle(.gray)
-                        .padding(12)
-                        .background(Color.white)
-                        .cornerRadius(12)
+                        .frame(width: 50, height: 50)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                     
                     Text("Your Current Email App")
                         .customFont(.callout, modifiers: [.disregardsDarkMode])
@@ -63,11 +60,10 @@ struct NotificationBar: View {
                 
                 // Googs App Section
                 HStack(spacing: 20) {
-                    Image(systemName: "figure")
+                    Image("GoogsIcon")
                         .resizable()
-                        .frame(width: 44, height: 44)
+                        .frame(width: 50, height: 50)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .foregroundStyle(.black)
                     
                     Text("Googs")
                         .customFont(.callout, modifiers: [.disregardsDarkMode])

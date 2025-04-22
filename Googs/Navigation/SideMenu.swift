@@ -10,7 +10,9 @@ import RiveRuntime
 
 struct SideMenu: View {
     @State var isDarkMode = false
-    @AppStorage("selectedMenu") var selectedMenu: SelectedMenu = .home
+    @State var selectedMenu: SelectedMenu = .home
+    @ObservedObject var viewStateManager: ViewStateManager
+    @AppStorage("isSignedIn") var isSignedIn: Bool = true
     
     var body: some View {
         VStack(spacing: 0) {
@@ -100,16 +102,20 @@ struct SideMenu: View {
                         .frame(maxWidth: selectedMenu == item.menu ? .infinity : 0)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 )
-                .background(Color("Background 2"))
                 .onTapGesture {
-                    withAnimation(.timingCurve(0.2, 0.8, 0.2, 1)) {
-                        selectedMenu = item.menu
-                    }
-                    item.icon.setInput("active", value: true)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        item.icon.setInput("active", value: false)
-                    }
+
+                    selectedMenu = item.menu
+                    
+            
+                    handleNavigation(for: item.menu)
+                    
+                    
                 }
+                
+                
+                
+                
+                
             }
         }
         .font(.headline)
@@ -141,25 +147,53 @@ struct SideMenu: View {
                 )
                 .background(Color("Background 2"))
                 .onTapGesture {
-                    withAnimation(.timingCurve(0.2, 0.8, 0.2, 1)) {
+
                         selectedMenu = item.menu
-                    }
-                    item.icon.setInput("active", value: true)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        item.icon.setInput("active", value: false)
-                    }
+                    
+
+                        handleNavigation(for: item.menu)
+                    
                 }
+                
+                
+                
+                
+                
             }
         }
         .font(.headline)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(8)
     }
+    
+    // Handle navigation based on selected menu
+    private func handleNavigation(for menuItem: SelectedMenu) {
+        // Navigate based on menu selection using ViewStateManager
+        switch menuItem {
+        case .home:
+            viewStateManager.navigateTo(.home)
+        case .emails:
+            viewStateManager.navigateTo(.emails)
+        case .search:
+            viewStateManager.navigateTo(.search)
+        case .favorites:
+            viewStateManager.navigateTo(.favorites)
+        case .help:
+            viewStateManager.navigateTo(.help)
+        case .history:
+            viewStateManager.navigateTo(.history)
+        case .notifications:
+            viewStateManager.navigateTo(.notifications)
+        case .darkmode:
+            // Dark mode toggle doesn't need navigation
+            break
+        }
+    }
 }
 
 struct SideMenu_Previews: PreviewProvider {
     static var previews: some View {
-        SideMenu()
+        SideMenu(viewStateManager: ViewStateManager())
     }
 }
 
@@ -172,6 +206,7 @@ struct MenuItem: Identifiable {
 
 var menuItems = [
     MenuItem(text: "Home", icon: RiveViewModel(fileName: "icons", stateMachineName: "HOME_interactivity", artboardName: "HOME"), menu: .home),
+    MenuItem(text: "Emails", icon: RiveViewModel(fileName: "icons", stateMachineName: "CHAT_Interactivity", artboardName: "CHAT"), menu: .emails),
     MenuItem(text: "Search", icon: RiveViewModel(fileName: "icons", stateMachineName: "SEARCH_Interactivity", artboardName: "SEARCH"), menu: .search),
     MenuItem(text: "Favorites", icon: RiveViewModel(fileName: "icons", stateMachineName: "STAR_Interactivity", artboardName: "LIKE/STAR"), menu: .favorites),
     MenuItem(text: "Help", icon: RiveViewModel(fileName: "icons", stateMachineName: "CHAT_Interactivity", artboardName: "CHAT"), menu: .help)
@@ -194,4 +229,5 @@ enum SelectedMenu: String {
     case history
     case notifications
     case darkmode
+    case emails
 }

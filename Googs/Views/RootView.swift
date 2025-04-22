@@ -25,7 +25,7 @@ struct RootView: View {
                     SignInView()
                 } else {
                     // User is onboarded and signed in
-                    ContentView()
+                    MainViewContainer()
                 }
             } else {
                 // Show the splash screen.
