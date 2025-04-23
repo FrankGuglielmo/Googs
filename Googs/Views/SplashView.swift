@@ -11,7 +11,7 @@ import RiveRuntime
 
 struct SplashView: View {
     // Your Rive model for the animated splash screen.
-    let splashModel = RiveViewModel(fileName: "googslaunchscreen", stateMachineName: "State Machine 1")
+    let splashModel = RiveViewModel(fileName: "googslaunchscreen", stateMachineName: "State Machine 1", artboardName: "Atom")
     
     // Binding that allows this view to notify the parent when to transition.
     @Binding var showMainContent: Bool
