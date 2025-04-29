@@ -47,6 +47,7 @@ struct MainViewContainer: View {
                     isMenuOpen: $isMenuOpen,
                     showProfileMenu: $showProfileMenu
                 )
+                .environmentObject(authViewModel)
 //                .padding(.top, 50)
 //                .opacity(isMenuOpen ? 1 : 0)
 //                .offset(x: isMenuOpen ? 0 : -300)

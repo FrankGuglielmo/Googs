@@ -7,6 +7,9 @@ import Combine
 class AuthViewModel: ObservableObject {
     @Published private(set) var isAuthenticated = false
     @Published private(set) var currentUser: User?
+    @Published private(set) var displayName: String?
+    @Published private(set) var email: String?
+    @Published private(set) var photoURL: URL?
     
     private let authService: AuthService
     private var cancellables = Set<AnyCancellable>()
@@ -21,7 +24,13 @@ class AuthViewModel: ObservableObject {
         
         authService.$user
             .receive(on: DispatchQueue.main)
-            .assign(to: &$currentUser)
+            .sink { [weak self] user in
+                self?.currentUser = user
+                self?.displayName = user?.displayName
+                self?.email = user?.email
+                self?.photoURL = user?.photoURL
+            }
+            .store(in: &cancellables)
     }
     
     func signOut() {

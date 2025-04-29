@@ -41,14 +41,9 @@ struct GoogsApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if authViewModel.isAuthenticated {
-                MainViewContainer()
-                    .environmentObject(authViewModel)
-            } else {
-                LoginView()
-                    .environmentObject(authViewModel)
-            }
+            RootView()
+                .environmentObject(authViewModel)
+                .modelContainer(sharedModelContainer)
         }
-        .modelContainer(sharedModelContainer)
     }
 }
