@@ -23,6 +23,9 @@ struct MainViewContainer: View {
     // Rive animation state
     var button = RiveViewModel(fileName: "menu_button", stateMachineName: "State Machine", autoPlay: false)
     
+    // Auth state
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    
     // Sign-in state
     @AppStorage("isSignedIn") var isSignedIn: Bool = true
     
@@ -44,6 +47,7 @@ struct MainViewContainer: View {
                     isMenuOpen: $isMenuOpen,
                     showProfileMenu: $showProfileMenu
                 )
+                .environmentObject(authViewModel)
 //                .padding(.top, 50)
 //                .opacity(isMenuOpen ? 1 : 0)
 //                .offset(x: isMenuOpen ? 0 : -300)
@@ -109,7 +113,7 @@ struct MainViewContainer: View {
                         
                         Button(action: {
                             // Sign out action
-                            isSignedIn = false
+                            authViewModel.signOut()
                             showProfileMenu = false
                         }) {
                             Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")

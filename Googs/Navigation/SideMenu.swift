@@ -15,6 +15,7 @@ struct SideMenu: View {
     @Binding var isMenuOpen: Bool
     @Binding var showProfileMenu: Bool
     @AppStorage("isSignedIn") var isSignedIn: Bool = true
+    @EnvironmentObject private var authViewModel: AuthViewModel
     
     // Update selected menu when view changes from outside the menu
     private func updateSelectedMenuFromView() {
@@ -48,15 +49,46 @@ struct SideMenu: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Image(systemName: "person")
-                    .padding(12)
+                // User avatar
+                if let photoURL = authViewModel.currentUser?.photoURL {
+                    AsyncImage(url: photoURL) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    } placeholder: {
+                        Image(systemName: "person")
+                            .foregroundColor(.white)
+                    }
+                    .frame(width: 44, height: 44)
                     .background(.white.opacity(0.2))
-                    .mask(Circle())
+                    .clipShape(Circle())
+                } else {
+                    Image(systemName: "person")
+                        .padding(12)
+                        .background(.white.opacity(0.2))
+                        .mask(Circle())
+                }
+                
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Meng To")
-                    Text("UI Designer")
-                        .font(.subheadline)
-                        .opacity(0.7)
+                    // User display name
+                    if let displayName = authViewModel.currentUser?.displayName, !displayName.isEmpty {
+                        Text(displayName)
+                    } else if let email = authViewModel.currentUser?.email, !email.isEmpty {
+                        Text(email.components(separatedBy: "@").first ?? email)
+                    } else {
+                        Text("User")
+                    }
+                    
+                    // User email or role
+                    if let email = authViewModel.currentUser?.email, !email.isEmpty {
+                        Text(email)
+                            .font(.subheadline)
+                            .opacity(0.7)
+                    } else {
+                        Text("Guest User")
+                            .font(.subheadline)
+                            .opacity(0.7)
+                    }
                 }
                 Spacer()
             }

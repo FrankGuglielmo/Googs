@@ -5,12 +5,13 @@
 //  Created by Frank Guglielmo on 4/12/25.
 //
 
-
+import GoogleSignIn
 import SwiftUI
+import FirebaseAnalytics
 
 struct RootView: View {
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
-    @AppStorage("isSignedIn") var isSignedIn: Bool = false
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @State private var showMainContent = false
     
     var body: some View {
@@ -20,12 +21,18 @@ struct RootView: View {
                 if !hasCompletedOnboarding {
                     // User hasn't completed onboarding
                     OnboardingView()
-                } else if !isSignedIn {
+                        .analyticsScreen(name: "Onboarding")
+                } else if !authViewModel.isAuthenticated {
                     // User has completed onboarding but isn't signed in
-                    SignInView()
+                    LoginView()
+                        .onOpenURL { url in
+                            GIDSignIn.sharedInstance.handle(url)
+                        }
+                        .analyticsScreen(name: "Login")
                 } else {
                     // User is onboarded and signed in
                     MainViewContainer()
+                        .environmentObject(authViewModel)
                 }
             } else {
                 // Show the splash screen.
@@ -33,5 +40,7 @@ struct RootView: View {
             }
         }
         .animation(.easeInOut, value: showMainContent)
+        .animation(.easeInOut, value: authViewModel.isAuthenticated)
+        .animation(.easeInOut, value: hasCompletedOnboarding)
     }
 }
