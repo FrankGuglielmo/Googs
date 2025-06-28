@@ -11,6 +11,7 @@ class AuthService: ObservableObject {
     @Published private(set) var isAuthenticated = false
     
     private var cancellables = Set<AnyCancellable>()
+    private let backendAPI = BackendAPI.shared
     
     init() {
         // Listen for auth state changes on the main thread
@@ -20,11 +21,26 @@ class AuthService: ObservableObject {
                 self?.isAuthenticated = user != nil
             }
         }
+        
+        // Also observe backend authentication state
+        backendAPI.$isAuthenticated
+            .sink { [weak self] isBackendAuthenticated in
+                // If backend is not authenticated but Firebase is, we might need to re-exchange tokens
+                if !isBackendAuthenticated && self?.user != nil {
+                    print("Backend authentication lost while Firebase user exists")
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func signInWithEmail(email: String, password: String) async throws {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            
+            // Get ID token and exchange with backend
+            let idToken = try await result.user.getIDToken()
+            _ = try await backendAPI.exchangeGoogleToken(idToken)
+            
             await MainActor.run {
                 self.user = result.user
                 self.isAuthenticated = true
@@ -37,6 +53,11 @@ class AuthService: ObservableObject {
     func signUpWithEmail(email: String, password: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
+            
+            // Get ID token and exchange with backend
+            let idToken = try await result.user.getIDToken()
+            _ = try await backendAPI.exchangeGoogleToken(idToken)
+            
             await MainActor.run {
                 self.user = result.user
                 self.isAuthenticated = true
@@ -49,6 +70,12 @@ class AuthService: ObservableObject {
     func signOut() throws {
         do {
             try Auth.auth().signOut()
+            
+            // Also sign out from backend
+            Task {
+                await backendAPI.signOut()
+            }
+            
             DispatchQueue.main.async {
                 self.user = nil
                 self.isAuthenticated = false
@@ -72,10 +99,15 @@ class AuthService: ObservableObject {
                 throw NSError(domain: "AuthService", code: -1, userInfo: [NSLocalizedDescriptionKey: "No ID token found"])
             }
             
+            // First authenticate with Firebase
             let credential = GoogleAuthProvider.credential(withIDToken: idToken,
                                                          accessToken: result.user.accessToken.tokenString)
             
             let authResult = try await Auth.auth().signIn(with: credential)
+            
+            // Then exchange the Google ID token with our backend
+            _ = try await backendAPI.exchangeGoogleToken(idToken)
+            
             await MainActor.run {
                 self.user = authResult.user
                 self.isAuthenticated = true
@@ -111,6 +143,11 @@ class AuthService: ObservableObject {
         )
         
         let authResult = try await Auth.auth().signIn(with: credential)
+        
+        // Get Firebase ID token and exchange with backend
+        let idToken = try await authResult.user.getIDToken()
+        _ = try await backendAPI.exchangeGoogleToken(idToken)
+        
         await MainActor.run {
             self.user = authResult.user
             self.isAuthenticated = true
@@ -118,6 +155,16 @@ class AuthService: ObservableObject {
     }
     
     // MARK: - Helper Methods
+    
+    /// Check and refresh backend authentication if needed
+    func ensureBackendAuthentication() async throws {
+        // If we have a Firebase user but backend is not authenticated
+        if let user = self.user, !backendAPI.isAuthenticated {
+            // Get fresh ID token from Firebase
+            let idToken = try await user.getIDToken()
+            _ = try await backendAPI.exchangeGoogleToken(idToken)
+        }
+    }
     
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B5DD28E2E0F6EAC00E75274 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 7B5DD28D2E0F6EAC00E75274 /* FirebaseMessaging */; };
 		7B9B8B382DA8EBCF00ECBD05 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9B8B372DA8EBCF00ECBD05 /* RiveRuntime */; };
 		7B9B8B462DA8F4CA00ECBD05 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7B9B8B452DA8F4CA00ECBD05 /* .gitignore */; };
 		7BAA63712DC0718D002EFB80 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7BAA63702DC0718D002EFB80 /* GoogleSignIn */; };
@@ -129,6 +130,7 @@
 			files = (
 				7BAA63732DC0718D002EFB80 /* GoogleSignInSwift in Frameworks */,
 				7BAA63AF2DC082CC002EFB80 /* FirebaseAuth in Frameworks */,
+				7B5DD28E2E0F6EAC00E75274 /* FirebaseMessaging in Frameworks */,
 				7BAA63AD2DC08188002EFB80 /* FirebaseCore in Frameworks */,
 				7B9B8B382DA8EBCF00ECBD05 /* RiveRuntime in Frameworks */,
 				7BAA63AB2DC0814E002EFB80 /* FirebaseAnalytics in Frameworks */,
@@ -208,6 +210,7 @@
 				7BAA63AA2DC0814E002EFB80 /* FirebaseAnalytics */,
 				7BAA63AC2DC08188002EFB80 /* FirebaseCore */,
 				7BAA63AE2DC082CC002EFB80 /* FirebaseAuth */,
+				7B5DD28D2E0F6EAC00E75274 /* FirebaseMessaging */,
 			);
 			productName = Googs;
 			productReference = 7B9B8AE12DA8EABD00ECBD05 /* Googs.app */;
@@ -701,6 +704,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7B5DD28D2E0F6EAC00E75274 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BAA63782DC07F57002EFB80 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		7B9B8B372DA8EBCF00ECBD05 /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7B9B8B362DA8EB9E00ECBD05 /* XCRemoteSwiftPackageReference "rive-ios" */;

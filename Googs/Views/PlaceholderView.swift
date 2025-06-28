@@ -29,21 +29,49 @@ struct PlaceholderView: View {
                 
                 Spacer()
                 
-                // Placeholder content
-                VStack(spacing: 24) {
-                    Image(systemName: "hammer.fill")
-                        .font(.system(size: 72))
-                        .foregroundColor(.blue.opacity(0.7))
-                    
-                    Text("\(title) View")
-                        .font(.title)
-                        .fontWeight(.bold)
-                    
-                    Text("This feature is coming soon!")
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal, 40)
+                // Special case for notifications - show FCM test
+                if title.lowercased() == "notifications" {
+                    VStack(spacing: 24) {
+                        Image(systemName: "bell.badge")
+                            .font(.system(size: 72))
+                            .foregroundColor(.blue.opacity(0.7))
+                        
+                        Text("FCM Test Available")
+                            .font(.title)
+                            .fontWeight(.bold)
+                        
+                        Text("Test your Firebase Cloud Messaging setup")
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 40)
+                        
+                        NavigationLink(destination: FCMTestView()) {
+                            Text("Open FCM Test")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                        }
+                    }
+                } else {
+                    // Default placeholder content
+                    VStack(spacing: 24) {
+                        Image(systemName: "hammer.fill")
+                            .font(.system(size: 72))
+                            .foregroundColor(.blue.opacity(0.7))
+                        
+                        Text("\(title) View")
+                            .font(.title)
+                            .fontWeight(.bold)
+                        
+                        Text("This feature is coming soon!")
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 40)
+                    }
                 }
                 
                 Spacer()
