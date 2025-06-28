@@ -40,7 +40,7 @@ struct SideMenu: View {
         case .notifications:
             return .notifications
         case .settings:
-            return .darkmode // Map settings to darkmode for menu highlighting
+            return .environment // Map settings to environment for menu highlighting
         case .emailDetail:
             return .emails // Map email detail to emails section for menu highlighting
         }
@@ -255,6 +255,8 @@ struct SideMenu: View {
             switchMainView(to: .history)
         case .notifications:
             switchMainView(to: .notifications)
+        case .environment:
+            switchMainView(to: .settings)
         case .darkmode:
             // Dark mode toggle doesn't need navigation
             break
@@ -301,7 +303,8 @@ var menuItems = [
 
 var menuItems2 = [
     MenuItem(text: "History", icon: RiveViewModel(fileName: "icons", stateMachineName: "TIMER_Interactivity", artboardName: "TIMER"), menu: .history),
-    MenuItem(text: "Notifications", icon: RiveViewModel(fileName: "icons", stateMachineName: "BELL_Interactivity", artboardName: "BELL"), menu: .notifications)
+    MenuItem(text: "Notifications", icon: RiveViewModel(fileName: "icons", stateMachineName: "BELL_Interactivity", artboardName: "BELL"), menu: .notifications),
+    MenuItem(text: "Environment", icon: RiveViewModel(fileName: "icons", stateMachineName: "SETTINGS_Interactivity", artboardName: "SETTINGS"), menu: .environment)
 ]
 
 var menuItems3 = [
@@ -317,4 +320,5 @@ enum SelectedMenu: String {
     case notifications
     case darkmode
     case emails
+    case environment
 }

@@ -56,13 +56,16 @@ class AuthService: ObservableObject {
             
             // Get ID token and exchange with backend
             let idToken = try await result.user.getIDToken()
+            print("Got Firebase ID token, exchanging with backend...")
             _ = try await backendAPI.exchangeGoogleToken(idToken)
+            print("Successfully exchanged token with backend")
             
             await MainActor.run {
                 self.user = result.user
                 self.isAuthenticated = true
             }
         } catch {
+            print("Error in signUpWithEmail: \(error)")
             throw error
         }
     }
@@ -85,6 +88,7 @@ class AuthService: ObservableObject {
         }
     }
     
+    @MainActor
     func signInWithGoogle(presenting: UIViewController) async throws {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             throw NSError(domain: "AuthService", code: -1, userInfo: [NSLocalizedDescriptionKey: "No client ID found"])
@@ -93,28 +97,22 @@ class AuthService: ObservableObject {
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         
-        do {
-            let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: presenting)
-            guard let idToken = result.user.idToken?.tokenString else {
-                throw NSError(domain: "AuthService", code: -1, userInfo: [NSLocalizedDescriptionKey: "No ID token found"])
-            }
-            
-            // First authenticate with Firebase
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                         accessToken: result.user.accessToken.tokenString)
-            
-            let authResult = try await Auth.auth().signIn(with: credential)
-            
-            // Then exchange the Google ID token with our backend
-            _ = try await backendAPI.exchangeGoogleToken(idToken)
-            
-            await MainActor.run {
-                self.user = authResult.user
-                self.isAuthenticated = true
-            }
-        } catch {
-            throw error
+        let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: presenting)
+        guard let idToken = result.user.idToken?.tokenString else {
+            throw NSError(domain: "AuthService", code: -1, userInfo: [NSLocalizedDescriptionKey: "No ID token found"])
         }
+        
+        // First authenticate with Firebase
+        let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                     accessToken: result.user.accessToken.tokenString)
+        
+        let authResult = try await Auth.auth().signIn(with: credential)
+        
+        // Then exchange the Google ID token with our backend
+        _ = try await backendAPI.exchangeGoogleToken(idToken)
+        
+        self.user = authResult.user
+        self.isAuthenticated = true
     }
     
     func signInWithApple() async throws {

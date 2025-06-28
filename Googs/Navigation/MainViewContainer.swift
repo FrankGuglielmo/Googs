@@ -10,6 +10,8 @@ import RiveRuntime
 
 /// Main container view that handles top-level view switching and persistent UI elements
 struct MainViewContainer: View {
+    
+    @StateObject private var emailViewModel = EmailViewModel()
     // Current main view state
     @State private var currentMainView: ViewType = .home
     
@@ -133,6 +135,29 @@ struct MainViewContainer: View {
                     .padding(.trailing, 20)
                     .zIndex(1)
                 }
+                
+                // Environment Indicator (DEBUG only)
+                #if DEBUG
+                VStack {
+                    HStack {
+                        Spacer()
+                        Text(EnvironmentManager.shared.currentEnvironment.displayName)
+                            .font(.caption2)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(
+                                Capsule()
+                                    .fill(EnvironmentManager.shared.isLocalEnvironment() ? Color.green.opacity(0.8) : Color.blue.opacity(0.8))
+                            )
+                            .foregroundColor(.white)
+                            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 60)
+                    Spacer()
+                }
+                .zIndex(2)
+                #endif
             }
             .preferredColorScheme(isMenuOpen ? .dark : .light)
             .navigationDestination(for: ViewType.self) { viewType in
@@ -164,7 +189,7 @@ struct MainViewContainer: View {
             )
         case .emails:
             EmailListView(
-                onNavigateToSearch: { switchMainView(to: .search) },
+                emailViewModel: emailViewModel, onNavigateToSearch: { switchMainView(to: .search) },
                 onNavigateToEmailDetail: { email in
                     pathStore.navigateTo(.emailDetail(email))
                 }
@@ -180,7 +205,7 @@ struct MainViewContainer: View {
         case .notifications:
             PlaceholderView(title: "Notifications")
         case .settings:
-            PlaceholderView(title: "Settings")
+            EnvironmentSettingsView()
         case .emailDetail(let email):
             EmailDetailView(
                 email: email,

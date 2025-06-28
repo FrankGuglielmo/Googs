@@ -10,6 +10,7 @@ import SwiftUI
 // Mock email data for testing and development
 let mockEmails = [
     Email(
+        backendId: 1,
         sender: "Jane Smith",
         subject: "Project Proposal",
         preview: "Hello,",
@@ -23,6 +24,7 @@ let mockEmails = [
         isRead: false
     ),
     Email(
+        backendId: 2,
         sender: "Mike Johnson",
         subject: "Lunch next week?",
         preview: "Hey,",
@@ -36,6 +38,7 @@ let mockEmails = [
         isRead: true
     ),
     Email(
+        backendId: 3,
         sender: "Sarah Williams",
         subject: "Quarterly Report",
         preview: "Hi,",
@@ -49,6 +52,7 @@ let mockEmails = [
         isRead: true
     ),
     Email(
+        backendId: 4,
         sender: "Alex Brown",
         subject: "New Product Launch",
         preview: "Team,",
@@ -62,6 +66,7 @@ let mockEmails = [
         isRead: true
     ),
     Email(
+        backendId: 5,
         sender: "Lisa Chen",
         subject: "Weekend Getaway Plans",
         preview: "Hi there,",
@@ -75,6 +80,7 @@ let mockEmails = [
         isRead: true
     ),
     Email(
+        backendId: 6,
         sender: "David Wilson",
         subject: "Budget Approval Request",
         preview: "Hello Team,",

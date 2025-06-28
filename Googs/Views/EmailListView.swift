@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EmailListView: View {
-    @State private var emails = mockEmails
+    @ObservedObject var emailViewModel: EmailViewModel
     var onNavigateToSearch: () -> Void
     var onNavigateToEmailDetail: (Email) -> Void
     
@@ -19,10 +19,17 @@ struct EmailListView: View {
                 content
             }
         }
+        .task {
+            // Small delay to ensure view is fully initialized
+            try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+            await emailViewModel.loadEmails()
+        }
+        .refreshable {
+            await emailViewModel.loadEmails()
+        }
     }
     
     var content: some View {
-        
         VStack(alignment: .leading, spacing: 0) {
             // Header section - matched to dashboard layout
             HStack {
@@ -30,6 +37,17 @@ struct EmailListView: View {
                     .customFont(.largeTitle)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(20)
+                
+                // Debug button (temporary)
+                Button(action: {
+                    let token = BackendAPI.shared.getCurrentAccessToken()
+                    print("Current Access Token: \(token ?? "No token")")
+                }) {
+                    Image(systemName: "info.circle")
+                        .font(.system(size: 20))
+                        .foregroundColor(.blue)
+                        .padding(10)
+                }
                 
                 // Search button
                 Button(action: {
@@ -57,22 +75,106 @@ struct EmailListView: View {
             }
             
             // Email list
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    ForEach(emails) { email in
-                        VStack(spacing: 0) {
-                            EmailListItem(email: email) {
-                                // Navigate to email detail view
-                                onNavigateToEmailDetail(email)
-                            }
-                            
-                            Divider()
-                                .padding(.leading, 60)
+            if emailViewModel.isLoading && emailViewModel.emails.isEmpty {
+                // Loading state
+                VStack {
+                    ProgressView()
+                        .scaleEffect(1.2)
+                        .padding()
+                    Text("Loading emails...")
+                        .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.top, 50)
+            } else if let errorMessage = emailViewModel.errorMessage, !emailViewModel.isLoading, emailViewModel.emails.isEmpty {
+                // Error state (only show if not loading and no emails)
+                VStack {
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(.system(size: 40))
+                        .foregroundColor(.orange)
+                        .padding()
+                    Text("Error loading emails")
+                        .font(.headline)
+                        .padding(.bottom, 5)
+                    Text(errorMessage)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                    Button("Retry") {
+                        Task {
+                            await emailViewModel.loadEmails()
                         }
                     }
+                    .padding(.top, 10)
                 }
-                .padding(.top, 10)
-                .padding(.bottom, 20)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.top, 50)
+            } else if emailViewModel.emails.isEmpty {
+                // Empty state
+                VStack {
+                    Image(systemName: "tray")
+                        .font(.system(size: 40))
+                        .foregroundColor(.secondary)
+                        .padding()
+                    Text("No emails yet")
+                        .font(.headline)
+                        .padding(.bottom, 5)
+                    Text("Your emails will appear here once you're signed in")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.top, 50)
+            } else {
+                // Email list
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        ForEach(emailViewModel.emails) { email in
+                            VStack(spacing: 0) {
+                                EmailListItem(email: email) {
+                                    // Mark as read when tapped
+                                    if let backendId = email.backendId {
+                                        Task {
+                                            await emailViewModel.markAsRead(emailId: backendId, isRead: true)
+                                        }
+                                    }
+                                    // Navigate to email detail view
+                                    onNavigateToEmailDetail(email)
+                                }
+                                
+                                Divider()
+                                    .padding(.leading, 60)
+                            }
+                        }
+                        
+                        // Load more button
+                        if emailViewModel.hasMoreEmails {
+                            Button(action: {
+                                Task {
+                                    await emailViewModel.loadMoreEmails()
+                                }
+                            }) {
+                                HStack {
+                                    if emailViewModel.isLoading {
+                                        ProgressView()
+                                            .scaleEffect(0.8)
+                                    } else {
+                                        Image(systemName: "arrow.down.circle")
+                                    }
+                                    Text(emailViewModel.isLoading ? "Loading..." : "Load More")
+                                }
+                                .foregroundColor(.blue)
+                                .padding()
+                            }
+                            .disabled(emailViewModel.isLoading)
+                        }
+                    }
+                    .padding(.top, 10)
+                    .padding(.bottom, 20)
+                }
             }
         }
     }
@@ -98,8 +200,9 @@ struct FilterTab: View {
 struct EmailListView_Previews: PreviewProvider {
     static var previews: some View {
         EmailListView(
-            onNavigateToSearch: {},
-            onNavigateToEmailDetail: { _ in }
-        )
+                      emailViewModel: EmailViewModel(),
+                      onNavigateToSearch: {},
+                      onNavigateToEmailDetail: { _ in }
+                  )
     }
 }

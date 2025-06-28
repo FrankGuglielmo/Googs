@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Email: Identifiable {
     var id = UUID()
+    var backendId: Int? // Backend email ID for API calls
     var sender: String
     var subject: String
     var preview: String
